@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 2 - Day 12</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #5cb1a6, #6dc1b5);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+    h2 { text-align: center; color: #2c3e50; }
+    .section-title {
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 12px;
+      color: #34495e;
+      border-bottom: 2px solid #4caf91;
+      padding-bottom: 4px;
+    }
+    .question {
+      margin-bottom: 25px;
+    }
+    .english {
+      font-size: 16px;
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+    .translation {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    input[type="text"] {
+      width: 140px;
+      padding: 6px;
+      margin: 0 3px;
+      font-size: 15px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+    }
+    .check-btn {
+      margin-top: 6px;
+      background: #4caf91;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .feedback {
+      margin-top: 6px;
+      font-weight: bold;
+    }
+    .example {
+      margin-top: 4px;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    @media (max-width: 600px) {
+      input[type="text"] {
+        width: 100px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Task 2 - Day 12</h2>
+
+  <div class="section-title">一. 句子填空（Food）</div>
+  <div id="q1" class="question"></div>
+  <div id="q2" class="question"></div>
+  <div id="q3" class="question"></div>
+  <div id="q4" class="question"></div>
+
+  <div class="section-title">二. 短语填空（Work）</div>
+
+  <!-- 短语练习保持原样 -->
+  <div class="question"><div class="english">1. 致力于某事：</div><input type="text" id="p1"><button class="check-btn" onclick="checkPhrase('p1', 'dedicate oneself to')">Check</button><div class="feedback" id="fb_p1"></div></div>
+  <div class="question"><div class="english">2. 分担责任：</div><input type="text" id="p2"><button class="check-btn" onclick="checkPhrase('p2', 'share the responsibility')">Check</button><div class="feedback" id="fb_p2"></div></div>
+  <div class="question"><div class="english">3. 关心物质待遇：</div><input type="text" id="p3"><button class="check-btn" onclick="checkPhrase('p3', 'be concerned about material gains')">Check</button><div class="feedback" id="fb_p3"></div></div>
+  <div class="question"><div class="english">4. 高经济收入：</div><input type="text" id="p4"><button class="check-btn" onclick="checkPhrase('p4', 'high financial rewards')">Check</button><div class="feedback" id="fb_p4"></div></div>
+  <div class="question"><div class="english">5. 求职者：</div><input type="text" id="p5"><button class="check-btn" onclick="checkPhrase('p5', 'job-hunter')">Check</button><div class="feedback" id="fb_p5"></div></div>
+  <div class="question"><div class="english">6. 有挑战性和有前景的工作：</div><input type="text" id="p6"><button class="check-btn" onclick="checkPhrase('p6', 'challenging and promising position')">Check</button><div class="feedback" id="fb_p6"></div></div>
+  <div class="question"><div class="english">7. 跳槽者：</div><input type="text" id="p7"><button class="check-btn" onclick="checkPhrase('p7', 'job-hopper')">Check</button><div class="feedback" id="fb_p7"></div></div>
+  <div class="question"><div class="english">8. 自我实现：</div><input type="text" id="p8"><button class="check-btn" onclick="checkPhrase('p8', 'self-fulfillment')">Check</button><div class="feedback" id="fb_p8"></div></div>
+  <div class="question"><div class="english">9. 追求职业：</div><input type="text" id="p9"><button class="check-btn" onclick="checkPhrase('p9', 'pursue a career')">Check</button><div class="feedback" id="fb_p9"></div></div>
+  <div class="question"><div class="english">10. 同等对待：</div><input type="text" id="p10"><button class="check-btn" onclick="checkPhrase('p10', 'be equally treated')">Check</button><div class="feedback" id="fb_p10"></div></div>
+  <div class="question"><div class="english">11. 生活节奏：</div><input type="text" id="p11"><button class="check-btn" onclick="checkPhrase('p11', 'living tempo')">Check</button><div class="feedback" id="fb_p11"></div></div>
+</div>
+
+<script>
+  const examples = {
+    p1: { en: "She dedicates herself to helping disabled children.", zh: "她致力于帮助残障儿童。" },
+    p2: { en: "Family members should share the responsibility of housework.", zh: "家庭成员应共同分担家务责任。" },
+    p3: { en: "He is only concerned about material gains, not passion.", zh: "他只关心物质待遇，不关心热情。" },
+    p4: { en: "Many seek jobs with high financial rewards.", zh: "很多人追求高收入的工作。" },
+    p5: { en: "Job-hunters need to prepare resumes carefully.", zh: "求职者需要认真准备简历。" },
+    p6: { en: "She found a challenging and promising position in a tech firm.", zh: "她找到了一份有挑战性且前景不错的科技公司职位。" },
+    p7: { en: "Job-hoppers change jobs frequently.", zh: "跳槽者频繁更换工作。" },
+    p8: { en: "Volunteering gives many people a sense of self-fulfillment.", zh: "志愿服务让很多人获得自我实现。" },
+    p9: { en: "Young people should pursue a career they are passionate about.", zh: "年轻人应追求自己热爱的职业。" },
+    p10: { en: "In modern society, men and women should be equally treated.", zh: "现代社会中男女应被平等对待。" },
+    p11: { en: "The fast living tempo in cities causes stress.", zh: "城市快节奏的生活让人压力大。" }
+  };
+
+  const sentences = [
+    {
+      id: "s1",
+      text: "These days convenience food has improved significantly in terms of quality and availability, and the range for sale in the average supermarket is quite impressive.",
+      translation: "如今，方便食品在质量和供应方面都有显著提升，超市销售的种类也非常丰富。",
+      containerId: "q1"
+    },
+    {
+      id: "s2",
+      text: "In many countries, traditional meals continue to be shared in regular family gatherings. Important celebrations such as weddings, Christmas and Chinese New Year are marked by traditionally prepared meals.",
+      translation: "在很多国家，人们仍然在家庭聚会中分享传统餐食，重大节日也用传统食物庆祝。",
+      containerId: "q2"
+    },
+    {
+      id: "s3",
+      text: "In many countries, communities are alarmed at the rapid expansion of international fast food outlets that serve energy-dense, nutrient-poor food such as burgers, pizza and pies at relatively cheap prices.",
+      translation: "许多国家的社区对国际快餐店的迅速扩张感到担忧，这些快餐店提供高能量低营养的食物，如汉堡、披萨等，价格相对便宜。",
+      containerId: "q3"
+    },
+    {
+      id: "s4",
+      text: "Although it is true that fast food is both affordable and convenient, the cost and inconvenience of treating the illnesses it causes in later life are significant. In other words, fast food is beneficial in the short term, but its long-term effects are generally negative.",
+      translation: "虽然快餐便宜方便，但它带来的疾病治疗成本高，长期影响总体是负面的。",
+      containerId: "q4"
+    }
+  ];
+
+  function getRandomIndexes(array, min = 5, max = 7) {
+    const count = Math.min(Math.floor(Math.random() * (max - min + 1)) + min, array.length);
+    const set = new Set();
+    while (set.size < count) {
+      const i = Math.floor(Math.random() * array.length);
+      const word = array[i].replace(/[.,()"]/g, '');
+      if (word.length > 2 && !word.includes("'")) set.add(i);
+    }
+    return Array.from(set);
+  }
+
+  function renderSentence({ id, text, translation, containerId }) {
+    const words = text.split(" ");
+    const blanks = getRandomIndexes(words);
+    const answers = {};
+    const html = words.map((word, i) => {
+      const clean = word.replace(/[.,()"]/g, "");
+      const punct = word.match(/[.,()"]$/) ? word.slice(-1) : "";
+      if (blanks.includes(i)) {
+        const inputId = `${id}_${i}`;
+        answers[inputId] = clean.toLowerCase();
+        return `<input type="text" id="${inputId}" placeholder="...">${punct}`;
+      }
+      return word;
+    }).join(" ");
+    document.getElementById(containerId).innerHTML = `
+      <div class="english">${html}</div>
+      <div class="translation">${translation}</div>
+      <button class="check-btn" onclick='checkSentence("${id}", ${JSON.stringify(answers)})'>Check</button>
+      <div class="feedback" id="fb_${id}"></div>
+    `;
+  }
+
+  function checkSentence(id, answers) {
+    const feedback = document.getElementById("fb_" + id);
+    let correct = true;
+    for (const [inputId, expected] of Object.entries(answers)) {
+      const val = document.getElementById(inputId).value.trim().toLowerCase();
+      if (val !== expected) correct = false;
+    }
+    feedback.innerHTML = correct
+      ? "<span class='correct'>✔ 正确！</span>"
+      : `<span class='incorrect'>✘ 有错误</span> 正确答案：${Object.values(answers).join(" / ")}`;
+  }
+
+  function checkPhrase(id, answer) {
+    const feedback = document.getElementById("fb_" + id);
+    const value = document.getElementById(id).value.trim().toLowerCase();
+    const correctAnswer = answer.toLowerCase();
+    const example = examples[id];
+    let html = value === correctAnswer
+      ? `<span class='correct'>✔ 正确！</span>`
+      : `<span class='incorrect'>✘ 错误</span> 正确答案：${answer}`;
+    if (example) {
+      html += `<div class="example">例句：${example.en}<br>翻译：${example.zh}</div>`;
+    }
+    feedback.innerHTML = html;
+  }
+
+  // 渲染所有句子填空
+  sentences.forEach(renderSentence);
+</script>
+</body>
+</html>
